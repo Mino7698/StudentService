@@ -82,7 +82,7 @@ public class StudentFilterServiceTest {
 
     @Test
     public void getAllStudentsReverseSortedByNameTest() {
-        List<Student> sortedStudentList = studentList;
+        List<Student> sortedStudentList = new ArrayList<>(studentList);
         sortedStudentList.sort(StudentFilterServiceTest::compareByStudentName);
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentList);
 
