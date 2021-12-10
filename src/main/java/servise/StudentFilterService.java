@@ -3,7 +3,6 @@ package servise;
 import model.Student;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class StudentFilterService {
     }
 
     public Boolean doAllStudentsHavePositiveMarks() {
-        return studentParsingService.getAllStudent().stream().map(mark -> mark.getMark())
+        return studentParsingService.getAllStudent().stream().map(Student::getMark)
                 .allMatch(mark -> mark > 2);
     }
 
@@ -34,36 +33,13 @@ public class StudentFilterService {
     }
 
     public Map<Integer, Double> getAverageGradeInTheClass() {
-        Map<Integer, Double> dataMapOut = new HashMap<>();
-        studentParsingService.getAllStudent().stream()
-                .collect(Collectors.groupingBy(Student::getClassId)).entrySet().stream().forEach(entry -> {
-            Integer key = entry.getKey();
-            double averageValue = entry.getValue().stream()
-                    .mapToInt(Student::getMark)
-                    .summaryStatistics().getAverage();
-            dataMapOut.put(key, averageValue);
-        });
-        return dataMapOut;
+        return studentParsingService.getAllStudent().stream()
+                .collect(Collectors.groupingBy(Student::getClassId)).entrySet()
+                .stream().collect(Collectors.toMap(
+                Map.Entry::getKey,entry -> entry.getValue().stream()
+                        .mapToInt(Student::getMark)
+                        .summaryStatistics().getAverage()));
     }
 
-    public Map<Integer, Double> getAverageGradeInTheClass2() {
-
-        Map<Integer, Double> dataMapOut = new HashMap<Integer, Double>();
-        Map<Integer, List<Student>> mapClassIdAndStudentList = studentParsingService.getAllStudent().stream()
-                .collect(Collectors.groupingBy(Student::getClassId));
-
-        System.out.println(mapClassIdAndStudentList);
-
-        Map<Integer, Integer> mapi = new HashMap<>();
-        mapClassIdAndStudentList.entrySet().stream().forEach(entry -> {
-            Integer key = entry.getKey();
-            double averageValue = entry.getValue().stream()
-                    .mapToInt(value -> value.getMark())
-                    .summaryStatistics().getAverage();
-            dataMapOut.put(key, averageValue);
-        });
-
-        return dataMapOut;
-    }
 
 }
