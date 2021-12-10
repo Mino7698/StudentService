@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StudentFilterService {
-    private final StudentParsingService studentParsingService;
+    private final StudentService studentParsingService;
 
-    public StudentFilterService(StudentParsingService studentParsingService) {
+    public StudentFilterService(StudentService studentParsingService) {
         this.studentParsingService = studentParsingService;
     }
 

@@ -1,5 +1,6 @@
 package model;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @EqualsAndHashCode
 @Getter
+@Builder
 
 public class Student {
     private int userId;
@@ -26,6 +28,14 @@ public class Student {
         this.dataBirthday = LocalDate.of(Integer.parseInt(dataBirthday.substring(6,10)),
                 Integer.parseInt(dataBirthday.substring(3,5)),
                 Integer.parseInt(dataBirthday.substring(0,2)));
+        this.classId = classId;
+        this.mark = mark;
+    }
+
+    public Student(int userId, String userName, LocalDate dataBirthday, int classId, int mark) {
+        this.userId = userId;
+        this.userName = userName;
+        this.dataBirthday = dataBirthday;
         this.classId = classId;
         this.mark = mark;
     }

@@ -1,8 +1,6 @@
 package servise;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import model.Student;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
@@ -13,7 +11,7 @@ import java.util.stream.Collectors;
 
 
 
-public class StudentParsingService {
+public class StudentService {
     public List<Student> getAllStudent() {
 
         try {
@@ -32,6 +30,5 @@ public class StudentParsingService {
         } catch (IOException e) {
             return Collections.emptyList();
         }
-
 }
 }
