@@ -15,11 +15,11 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UnitTests {
+public class StudentFilterServiceTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
-    private StudentFilterService mockStudentFilterService;
+    private StudentFilterService StudentFilterService;
     List<Student> studentList = new ArrayList<>();
 
     @Mock
@@ -76,17 +76,17 @@ public class UnitTests {
 
     @Before
     public void setUp(){
-        mockStudentFilterService = new StudentFilterService(mockStudentService);
+        StudentFilterService = new StudentFilterService(mockStudentService);
         creatingListOfStudentsForTests();
     }
 
     @Test
     public void getAllStudentsReverseSortedByNameTest() {
         List<Student> sortedStudentList = studentList;
-        sortedStudentList.sort(UnitTests::compareByStudentName);
+        sortedStudentList.sort(StudentFilterServiceTest::compareByStudentName);
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentList);
 
-        Assert.assertEquals(sortedStudentList, mockStudentFilterService.getAllStudentsReverseSortedByName());
+        Assert.assertEquals(sortedStudentList, StudentFilterService.getAllStudentsReverseSortedByName());
 
         Mockito.verify(mockStudentService).getAllStudent();
         Mockito.verifyNoMoreInteractions(mockStudentService);
@@ -98,7 +98,7 @@ public class UnitTests {
 
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentList);
 
-        Assert.assertEquals(namesOfStudentsUnderTheAgeOf21YearsList, mockStudentFilterService.getNameOfStudentsUnderTheAgeOf21Years());
+        Assert.assertEquals(namesOfStudentsUnderTheAgeOf21YearsList, StudentFilterService.getNameOfStudentsUnderTheAgeOf21Years());
 
         Mockito.verify(mockStudentService).getAllStudent();
         Mockito.verifyNoMoreInteractions(mockStudentService);
@@ -113,7 +113,7 @@ public class UnitTests {
         mapOfAverageGradeInTheClass.put(4,4.0);
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentList);
 
-        Assert.assertEquals(mapOfAverageGradeInTheClass, mockStudentFilterService.getAverageGradeInTheClass());
+        Assert.assertEquals(mapOfAverageGradeInTheClass, StudentFilterService.getAverageGradeInTheClass());
 
         Mockito.verify(mockStudentService).getAllStudent();
         Mockito.verifyNoMoreInteractions(mockStudentService);
@@ -124,7 +124,7 @@ public class UnitTests {
     public void doAllStudentsHavePositiveMarksTest() {
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentList);
 
-        Assert.assertEquals(false, mockStudentFilterService.doAllStudentsHavePositiveMarks());
+        Assert.assertEquals(false, StudentFilterService.doAllStudentsHavePositiveMarks());
 
         Mockito.verify(mockStudentService).getAllStudent();
         Mockito.verifyNoMoreInteractions(mockStudentService);
