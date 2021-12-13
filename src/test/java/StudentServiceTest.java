@@ -193,18 +193,6 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void studentServiceTestWithMockingRequestGet() {
-        Request myTestRequest = Request.Get("https://vk.com/doc68066890_619731388");
-        try (MockedStatic<Request> mockedRequest = Mockito.mockStatic(Request.class)) {
-            mockedRequest.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
-                    .thenReturn(myTestRequest);
-            Assert.assertEquals(studentServiceForTest.getAllStudent(), studentListForTests);
-
-            mockedRequest.verify(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"));
-        }
-    }
-
-    @Test
     public void studentServiceTestWithMockingAllTrace() {
         try (MockedStatic<Request> mockedRequest = Mockito.mockStatic(Request.class)) {
             mockedRequest.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
