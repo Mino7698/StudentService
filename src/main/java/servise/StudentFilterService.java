@@ -36,9 +36,9 @@ public class StudentFilterService {
         return studentParsingService.getAllStudent().stream()
                 .collect(Collectors.groupingBy(Student::getClassId)).entrySet()
                 .stream().collect(Collectors.toMap(
-                Map.Entry::getKey,entry -> entry.getValue().stream()
-                        .mapToInt(Student::getMark)
-                        .summaryStatistics().getAverage()));
+                        Map.Entry::getKey, entry -> entry.getValue().stream()
+                                .mapToInt(Student::getMark)
+                                .summaryStatistics().getAverage()));
     }
 
 

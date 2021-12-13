@@ -24,6 +24,8 @@ public class StudentServiceTest {
     private final StudentService studentServiceForTest = new StudentService();
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    String stringForMockTestContentAsString;
     List<Student> studentListForTests = new ArrayList<>();
 
     @Mock
@@ -33,10 +35,8 @@ public class StudentServiceTest {
     @Mock
     Content mockTestContent;
 
-    String myTestString;
-
-    public void createMyTestString() {
-        myTestString = """
+    public void createStringForMockTestContentAsString() {
+        stringForMockTestContentAsString = """
                 {
                   "students": [
                     {
@@ -189,16 +189,17 @@ public class StudentServiceTest {
     @Before
     public void setUp() {
         creatingListOfStudentsForTests();
-        createMyTestString();
+        createStringForMockTestContentAsString();
     }
 
     @Test
-    public void studentServiceTestWithMockingGet() {
+    public void studentServiceTestWithMockingRequestGet() {
         Request myTestRequest = Request.Get("https://vk.com/doc68066890_619731388");
         try (MockedStatic<Request> mockedRequest = Mockito.mockStatic(Request.class)) {
             mockedRequest.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
                     .thenReturn(myTestRequest);
             Assert.assertEquals(studentServiceForTest.getAllStudent(), studentListForTests);
+
             mockedRequest.verify(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"));
         }
     }
@@ -206,10 +207,9 @@ public class StudentServiceTest {
     @Test
     public void studentServiceTestWithMockingAllTrace() {
         try (MockedStatic<Request> mockedRequest = Mockito.mockStatic(Request.class)) {
-
             mockedRequest.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
                     .thenReturn(mockTestRequest);
-            Mockito.when(mockTestContent.asString()).thenReturn(myTestString);
+            Mockito.when(mockTestContent.asString()).thenReturn(stringForMockTestContentAsString);
             Mockito.when(mockTestResponse.returnContent()).thenReturn(mockTestContent);
             Mockito.when(mockTestRequest.execute()).thenReturn(mockTestResponse);
 
@@ -222,7 +222,6 @@ public class StudentServiceTest {
             Mockito.verifyNoMoreInteractions(mockTestResponse);
             Mockito.verify(mockTestRequest).execute();
             Mockito.verifyNoMoreInteractions(mockTestRequest);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -18,9 +18,10 @@ import java.util.*;
 public class StudentFilterServiceTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
-    List<Student> studentListForTests = new ArrayList<>();
 
+    List<Student> studentListForTests = new ArrayList<>();
     private StudentFilterService studentFilterService;
+
     @Mock
     private StudentService mockStudentService;
 
@@ -97,7 +98,8 @@ public class StudentFilterServiceTest {
 
     @Test
     public void getNameOfStudentsUnderTheAgeOf21YearsTest() {
-        List<String> namesOfStudentsUnderTheAgeOf21YearsList = Arrays.asList("Petr Emelianenko", "Santa Barbara", "Grozny Ivan", "Petr The First", "Vladimir The Red Sun");
+        List<String> namesOfStudentsUnderTheAgeOf21YearsList =
+                Arrays.asList("Petr Emelianenko", "Santa Barbara", "Grozny Ivan", "Petr The First", "Vladimir The Red Sun");
 
         Mockito.when(mockStudentService.getAllStudent()).thenReturn(studentListForTests);
 

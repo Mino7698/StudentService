@@ -23,13 +23,13 @@ public class Student {
         this.userId = userId;
         this.userName = userName;
         this.dataBirthday = LocalDate.of(Integer.parseInt(dataBirthday.substring(6)),
-                Integer.parseInt(dataBirthday.substring(3,5)),
-                Integer.parseInt(dataBirthday.substring(0,2)));
+                Integer.parseInt(dataBirthday.substring(3, 5)),
+                Integer.parseInt(dataBirthday.substring(0, 2)));
         this.classId = classId;
         this.mark = mark;
     }
 
-    // used for the builder in testing
+    // used for builder in testing
     public Student(int userId, String userName, LocalDate dataBirthday, int classId, int mark) {
         this.userId = userId;
         this.userName = userName;
