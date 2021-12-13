@@ -1,7 +1,4 @@
 import model.Student;
-import org.apache.http.client.fluent.Content;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -9,139 +6,26 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import servise.StudentFilterService;
 import servise.StudentService;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StudentFilterServiceTest {
-
-    private final StudentService studentServiceForTest = new StudentService();
     @Rule
     public ExpectedException exception = ExpectedException.none();
     List<Student> studentListForTests = new ArrayList<>();
-    @Mock
-    Request myTestRequest;
-    @Mock
-    Response myTestResponse;
-    @Mock
-    Content myTestContent;
 
-    String myTestString;
     private StudentFilterService studentFilterService;
     @Mock
     private StudentService mockStudentService;
 
     public static int compareByStudentName(Student firstStudent, Student secondStudent) {
         return -firstStudent.getUserName().toUpperCase().compareTo(secondStudent.getUserName().toUpperCase());
-    }
-
-    public void initializationOfTestString() {
-        myTestString = """
-                {
-                  "students": [
-                    {
-                      "userId": 1,
-                      "userName": "Petrosyan Eugeny",
-                      "dataBirthday": "16.09.1945",
-                      "classId": 1,
-                      "mark": 5
-                    },
-                    {
-                      "userId": 2,
-                      "userName": "Capitan HenryMorgan",
-                      "dataBirthday": "24.01.1635",
-                      "classId": 1,
-                      "mark": 4
-                    },
-                    {
-                      "userId": 3,
-                      "userName": "Confucius",
-                      "dataBirthday": "05.05.-497",
-                      "classId": 1,
-                      "mark": 5
-                    },   \s
-                    {
-                      "userId": 4,
-                      "userName": "Claudius Ptolemy",
-                      "dataBirthday": "28.02.177",
-                      "classId": 1,
-                      "mark": 4
-                    },
-
-                    {
-                      "userId": 5,
-                      "userName": "Dzu Kostya",
-                      "dataBirthday": "28.07.1999",
-                      "classId": 2,
-                      "mark": 2
-                    },   \s
-                    {
-                      "userId": 6,
-                      "userName": "Petr Emelianenko",
-                      "dataBirthday": "05.06.2001",
-                      "classId": 2,
-                      "mark": 2
-                    },   \s
-                    {
-                      "userId": 7,
-                      "userName": "Santa Barbara",
-                      "dataBirthday": "13.08.2002",
-                      "classId": 2,
-                      "mark": 2
-                    },
-
-                    {
-                      "userId": 8,
-                      "userName": "Grozny Ivan",
-                      "dataBirthday": "31.12.2003",
-                      "classId": 3,
-                      "mark": 1
-                    },   \s
-                    {
-                      "userId": 9,
-                      "userName": "Petr The First",
-                      "dataBirthday": "20.12.2001",
-                      "classId": 3,
-                      "mark": 1
-                    },   \s
-                    {
-                      "userId": 10,
-                      "userName": "Vladimir The Red Sun",
-                      "dataBirthday": "31.01.2003",
-                      "classId": 3,
-                      "mark": 1
-                    },
-
-                    {
-                      "userId": 11,
-                      "userName": "Birckgun Sergey",
-                      "dataBirthday": "28.08.1950",
-                      "classId": 4,
-                      "mark": 5
-                    },   \s
-                    {
-                      "userId": 12,
-                      "userName": "Gladkov Semen",
-                      "dataBirthday": "02.06.1998",
-                      "classId": 4,
-                      "mark": 3
-                    },   \s
-                    {
-                      "userId": 13,
-                      "userName": "Sharonova Alena",
-                      "dataBirthday": "15.05.1992",
-                      "classId": 4,
-                      "mark": 4
-                    }
-                  ]
-                }""";
     }
 
     public void creatingListOfStudentsForTests() {
@@ -197,7 +81,6 @@ public class StudentFilterServiceTest {
     public void setUp() {
         studentFilterService = new StudentFilterService(mockStudentService);
         creatingListOfStudentsForTests();
-        initializationOfTestString();
     }
 
     @Test
@@ -249,29 +132,6 @@ public class StudentFilterServiceTest {
         Mockito.verifyNoMoreInteractions(mockStudentService);
     }
 
-    @Test
-    public void studentServiceTestWithMockingGet() {
-        Request myTestRequest = Request.Get("https://vk.com/doc68066890_619731388");
-        try (MockedStatic<Request> mockedRequest = Mockito.mockStatic(Request.class)) {
-            mockedRequest.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
-                    .thenReturn(myTestRequest);
-            Assert.assertEquals(studentServiceForTest.getAllStudent(), studentListForTests);
-            mockedRequest.verify(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"));
-        }
-    }
 
-    @Test
-    public void studentServiceTestWithMockingAllTrace() {
-        try (MockedStatic<Request> utilities = Mockito.mockStatic(Request.class)) {
-            utilities.when(() -> Request.Get("https://webhook.site/673de1bb-1f24-4e8e-9255-1c65c9a5bd18"))
-                    .thenReturn(myTestRequest);
-            Mockito.when(myTestContent.asString()).thenReturn(myTestString);
-            Mockito.when(myTestResponse.returnContent()).thenReturn(myTestContent);
-            Mockito.when(myTestRequest.execute()).thenReturn(myTestResponse);
-            Assert.assertEquals(studentServiceForTest.getAllStudent(), studentListForTests);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
 
