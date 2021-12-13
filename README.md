@@ -5,8 +5,7 @@ java API сервис:
 3) getNameOfStudentsUnderTheAgeOf21Years - возвращает List<String>, список c именами всех учеников, которые младше 21 года   
 4) getNameOfStudentsUnderTheAgeOf21Years - возвращает List<String>, список c именами всех учеников, которые младше 21 года   
 5) tAverageGradeInTheClass - возвращает Map<Integer, Double>, справочник где ключ - id класса, а значением будет средняя оценка учеников в этом классе.
-6) getAllStudentsReverseSortedByName - возвращает List<Student>, список уникальных учеников отсортированных по имени пользователя от большего к меньшему
-7) StudentFilterService - сервисы фильтрации учеников, полученных с помощью предыдущего сервиса, (написаны с использованием stream api) 
+6) getAllStudentsReverseSortedByName - возвращает List<Student>, список уникальных учеников отсортированных по имени пользователя от большего к меньшему 
     
 
 На реализацию написаны unit-тесты с использованием Mockito.
