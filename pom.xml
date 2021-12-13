@@ -30,17 +30,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito-core.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>${fluent-hc.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito-inline.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -49,11 +50,12 @@
         <maven.compiler.target>16</maven.compiler.target>
         <jackson-databind.version>2.13.0-rc2</jackson-databind.version>
         <lombok.version>1.18.22</lombok.version>
-        <mockito-core.version>2.24.0</mockito-core.version>
+        <mockito-junit-jupiter.version>4.1.0</mockito-junit-jupiter.version>
         <junit.version>4.12</junit.version>
         <moneta.version>0.9</moneta.version>
         <fluent-hc.version>4.5.6</fluent-hc.version>
         <maven.compiler.target>16</maven.compiler.target>
+        <mockito-inline.version>3.8.0</mockito-inline.version>
     </properties>
 
 </project>

@@ -22,7 +22,7 @@ public class Student {
     public Student(int userId, String userName, String dataBirthday, int classId, int mark) {
         this.userId = userId;
         this.userName = userName;
-        this.dataBirthday = LocalDate.of(Integer.parseInt(dataBirthday.substring(6,10)),
+        this.dataBirthday = LocalDate.of(Integer.parseInt(dataBirthday.substring(6,dataBirthday.length())),
                 Integer.parseInt(dataBirthday.substring(3,5)),
                 Integer.parseInt(dataBirthday.substring(0,2)));
         this.classId = classId;
